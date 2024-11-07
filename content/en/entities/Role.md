@@ -16,10 +16,10 @@ aliases: [
 
 ```json
 {
-	"id": 3,
+	"id": "3",
 	"name": "Owner",
 	"color": "#ff3838",
-	"permissions": 1048575,
+	"permissions": "1048575",
 	"highlighted": true
 }
 ```
@@ -29,7 +29,7 @@ aliases: [
 ### `id` {#id}
 
 **Description:** The ID of the Role in the database.\
-**Type:** Integer\
+**Type:** String\
 **Version history:**\
 4.0.0 - added
 
@@ -50,7 +50,7 @@ aliases: [
 ### `permissions` {#permissions}
 
 **Description:** A bitmask that represents the sum of all permissions granted to the role.\
-**Type:** Integer\
+**Type:** String\
 **Version history:**\
 4.0.0 - added
 
@@ -69,7 +69,7 @@ To determine the permissions available to a certain role, convert the `permissio
 : **Administrator**. Users with this permission bypass all permissions.
 
 0x2
-: **Devops**. Allows users to access Sidekiq and pgHero dashboards.
+: **Devops**. Allows users to access Sidekiq and PgHero dashboards.
 
 0x4
 : **View Audit Log**. Allows users to see history of admin actions.

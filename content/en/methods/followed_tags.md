@@ -23,6 +23,8 @@ aliases: [
 GET /api/v1/followed_tags HTTP/1.1
 ```
 
+List your followed hashtags.
+
 **Returns:** Array of [Tag]({{< relref "entities/Tag" >}})\
 **OAuth:** User token + `read:follows`\
 **Version history:**\
@@ -34,7 +36,7 @@ GET /api/v1/followed_tags HTTP/1.1
 ##### Headers
 
 Authorization
-: {{<required>}} Provide this header with `Bearer <user token>` to gain authorized access to this API method.
+: {{<required>}} Provide this header with `Bearer <user_token>` to gain authorized access to this API method.
 
 ##### Query parameters
 

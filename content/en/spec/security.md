@@ -16,14 +16,14 @@ menu:
 For any HTTP request incoming to Mastodon, the Signature header should be attached:
 
 ```http
-Signature: keyId="https://my-example.com/actor#main-key",headers="(request-target) host date",signature="Y2FiYW...IxNGRiZDk4ZA=="
+Signature: keyId="https://my.example.com/actor#main-key",headers="(request-target) host date",signature="Y2FiYW...IxNGRiZDk4ZA=="
 ```
 
 The three parts of the `Signature:` header can be broken down like so:
 
 ```http
 Signature:
-  keyId="https://my-example.com/actor#main-key",
+  keyId="https://my.example.com/actor#main-key",
   headers="(request-target) host date",
   signature="Y2FiYW...IxNGRiZDk4ZA=="
 ```
@@ -32,8 +32,8 @@ The `keyId` should correspond to the actor and the key being used to generate th
 
 ```json
 "publicKey": {
-    "id": "https://my-example.com/actor#main-key",
-    "owner": "https://my-example.com/actor",
+    "id": "https://my.example.com/actor#main-key",
+    "owner": "https://my.example.com/actor",
     "publicKeyPem": "-----BEGIN PUBLIC KEY-----\nMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAvXc4vkECU2/CeuSo1wtn\nFoim94Ne1jBMYxTZ9wm2YTdJq1oiZKif06I2fOqDzY/4q/S9uccrE9Bkajv1dnkO\nVm31QjWlhVpSKynVxEWjVBO5Ienue8gND0xvHIuXf87o61poqjEoepvsQFElA5ym\novljWGSA/jpj7ozygUZhCXtaS2W5AD5tnBQUpcO0lhItYPYTjnmzcc4y2NbJV8hz\n2s2G8qKv8fyimE23gY1XrPJg+cRF+g4PqFXujjlJ7MihD9oqtLGxbu7o1cifTn3x\nBfIdPythWu5b4cujNsB3m3awJjVmx+MHQ9SugkSIYXV0Ina77cTNS0M2PYiH1PFR\nTwIDAQAB\n-----END PUBLIC KEY-----\n"
  },
 ```
@@ -48,7 +48,7 @@ To create an HTTP signature, you will have to define which headers are being has
 GET /users/username/outbox HTTP/1.1
 Host: mastodon.example
 Date: 18 Dec 2019 10:08:46 GMT
-Accept: application/ld+json; profile="http://www.w3.org/ns/activitystreams"
+Accept: application/ld+json; profile="https://www.w3.org/ns/activitystreams"
 ```
 
 The signature string is constructed using the values of the HTTP headers defined in `headers`, joined by newlines. Typically, you will want to include the request target, as well as the host and the date. Mastodon assumes `Date:` header if none are provided. For the above GET request, to generate a `Signature:` with `headers="(request-target) host date"` we would generate the following string:
@@ -67,11 +67,11 @@ The signature string is then hashed with RSA-SHA256 (RSASSA-PKCS1-v1_5 with SHA-
 GET /users/username/inbox HTTP/1.1
 Host: mastodon.example
 Date: 18 Dec 2019 10:08:46 GMT
-Accept: application/ld+json; profile="http://www.w3.org/ns/activitystreams"
-Signature: keyId="https://my-example.com/actor#main-key",headers="(request-target) host date",signature="Y2FiYW...IxNGRiZDk4ZA=="
+Accept: application/ld+json; profile="https://www.w3.org/ns/activitystreams"
+Signature: keyId="https://my.example.com/actor#main-key",headers="(request-target) host date",signature="Y2FiYW...IxNGRiZDk4ZA=="
 ```
 
-This request is functionally equivalent to saying that `https://my-example.com/actor` is requesting `https://mastodon.example/users/username/inbox` and is proving that they sent this request by signing `(request-target)`, `Host:`, and `Date:` with their private key linked at `keyId`, resulting in the provided `signature`.
+This request is functionally equivalent to saying that `https://my.example.com/actor` is requesting `https://mastodon.example/users/username/inbox` and is proving that they sent this request by signing `(request-target)`, `Host:`, and `Date:` with their private key linked at `keyId`, resulting in the provided `signature`.
 
 #### Signing POST requests and the Digest header {#digest}
 
@@ -82,12 +82,12 @@ POST /users/username/inbox HTTP/1.1
 HOST: mastodon.example
 Date: 18 Dec 2019 10:08:46 GMT
 Digest: sha-256=hcK0GZB1BM4R0eenYrj9clYBuyXs/lemt5iWRYmIX0A=
-Signature: keyId="https://my-example.com/actor#main-key",headers="(request-target) host date digest",signature="Y2FiYW...IxNGRiZDk4ZA=="
-Content-Type: application/ld+json; profile="http://www.w3.org/ns/activitystreams"
+Signature: keyId="https://my.example.com/actor#main-key",headers="(request-target) host date digest",signature="Y2FiYW...IxNGRiZDk4ZA=="
+Content-Type: application/ld+json; profile="https://www.w3.org/ns/activitystreams"
 
 {
   "@context": "https://www.w3.org/ns/activitystreams",
-  "actor": "https://example.com/actor",
+  "actor": "https://my.example.com/actor",
   "type": "Create",
   "object": {
     "type": "Note",
@@ -108,12 +108,12 @@ POST /users/username/inbox HTTP/1.1
 Host: mastodon.example
 Date: 18 Dec 2019 10:08:46 GMT
 Digest: e37e179c75071a291f90a5fd4f848da87b491f1282f7bb8509ef2115b81ee0f4
-Signature: keyId="https://my-example.com/actor#main-key",headers="(request-target) host date digest",signature="Y2FiYW...IxNGRiZDk4ZA=="
-Content-Type: application/ld+json; profile="http://www.w3.org/ns/activitystreams"
+Signature: keyId="https://my.example.com/actor#main-key",headers="(request-target) host date digest",signature="Y2FiYW...IxNGRiZDk4ZA=="
+Content-Type: application/ld+json; profile="https://www.w3.org/ns/activitystreams"
 
 {
   "@context": "https://www.w3.org/ns/activitystreams",
-  "actor": "https://example.com/actor",
+  "actor": "https://my.example.com/actor",
   "type": "Create",
   "object": {
     "type": "Note",
